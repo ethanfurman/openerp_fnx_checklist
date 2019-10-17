@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_???_checklist_all,???_checklist_all,model_???_checklist,,1,0,0,0
+access_???_question_all,???_checklist_question_all,model_???_checklist_question,,1,0,0,0
+access_???_history_all,???_checklist_history_all,model_???_checklist_history,,1,0,0,0
+access_???_history_answer_all,???_checklist_history_answer_all,model_???_checklist_history_answer,,1,0,0,0
+access_???_checklist_user,???_checklist_user,model_???_checklist,group_fnx_???_user,1,1,1,0
+access_???_question_user,???_checklist_question_user,model_???_checklist_question,group_fnx_???_user,1,1,1,0
+access_???_history_user,???_checklist_history_user,model_???_checklist_history,group_fnx_???_user,1,1,1,0
+access_???_history_answer_user,???_checklist_history_answer_user,model_???_checklist_history_answer,group_fnx_???_user,1,1,1,0
+access_???_checklist_manager,???_checklist_manager,model_???_checklist,group_fnx_???_manager,1,1,1,1
+access_???_question_manager,???_checklist_question_manager,model_???_checklist_question,group_fnx_???_manager,1,1,1,1
+access_???_history_manager,???_checklist_history_manager,model_???_checklist_history,group_fnx_???_manager,1,1,1,1
+access_???_history_answer_manager,???_checklist_history_answer_manager,model_???_checklist_history_answer,group_fnx_???_manager,1,1,1,1
+

@@ -1,0 +1,25 @@
+!!!xml
+~openerp
+    ~data noupdate='1'
+
+        ~record model='ir.module.category' #module_fnx_???
+            @name: ???
+            @description: Support cleanliness efforts.
+
+        ~record model='res.groups' #group_fnx_???
+            @name: User
+            @category_id ref='module_fnx_???'
+            @comment: User has access to normal ??? tracking.
+
+        ~record model='res.groups' #group_fnx_???
+            @name: Staff
+            @category_id ref='module_fnx_???'
+            @comment: Staff can participate in ??? tracking.
+            @implied_ids eval="[(6, 0, [ref('group_fnx_???')])]"
+
+        ~record model='res.groups' #group_fnx_???
+            @name: Manager
+            @category_id ref='module_fnx_???'
+            @comment: Manager has all access.
+            @implied_ids eval="[(6, 0, [ref('group_fnx_???')])]"
+            @users eval="[(4, ref('base.user_root'))]"

@@ -1,0 +1,48 @@
+!!!xml1.0
+
+-response = 'fnx.checklist.allowed_response'
+
+~openerp
+    ~data noupdate='1'
+
+        // each @type should have an:
+        // - affirmative
+        // - negative
+        // - not applicable
+        // in that order
+
+        ~record model=response #response_yes
+            @name: Yes
+            @type: yes_no
+
+        ~record model=response #response_no
+            @name: No
+            @type: yes_no
+
+        ~record model=response #response_yn_na
+            @name: N/A
+            @type: yes_no
+
+        ~record model=response #response_pass
+            @name: Pass
+            @type: pass_fail
+
+        ~record model=response #response_fail
+            @name: Fail
+            @type: pass_fail
+
+        ~record model=response #response_pf_na
+            @name: N/A
+            @type: pass_fail
+
+        ~record model=response #response_done
+            @name: Done
+            @type: done_skip
+
+        ~record model=response #response_skip
+            @name: Skipped
+            @type: done_skip
+
+        ~record model=response #response_ds_na
+            @name: N/A
+            @type: done_skip

@@ -1,0 +1,109 @@
+!!! xml1.0
+
+-act_window = 'ir.actions.act_window'
+-view = 'ir.ui.view'
+
+~openerp
+
+    ~data
+
+        // Checklists
+
+        // Main menu
+
+        ~menuitem @Checklists #menu_checklist_main groups='group_sanitation_user'
+
+        ~record model=view #fnx_view_checklist_tree
+            @name: fnx.checklist.tree
+            @model: fnx.checklist
+            @type: tree
+            @arch type='xml'
+                ~tree $Checklist
+                    @name colspan='2'
+
+        ~record model=view #fnx_view_checklist_form
+            @name: fnx.checklist.form
+            @model: fnx.checklist
+            @type: form
+            @arch type='xml'
+                ~form $Question
+                    @key invisible='1'
+                    @name
+                    @question_ids colspan='4' nolabel='1'
+                        ~tree
+                            @question nolabel='1'
+                            @response_type nolabel='1'
+                        ~form
+                            @question nolabel='1'
+                            @response_type nolabel='1'
+
+        ~record model=act_window #fnx_action_checklist_all
+            @name: All Checklists
+            @type: ir.actions.act_window
+            @res_model: fnx.checklist
+            @view_type: form
+            @view_mode: tree,form
+
+        ~menuitem #menu_fnx_checklist@Checklists parent='fnx.menu_checklist_main' sequence='60'
+
+        // In-progress/Finished Checklists
+
+        ~record model=view #fnx_view_checklist_history_tree
+            @name: fnx.checklist.history.tree
+            @model: fnx.checklist.history
+            @type: tree
+            @arch type='xml'
+                ~tree $Checklist
+                    @name
+                    @checklist_id
+                    @user_id
+                    @date_end
+                    @state
+
+        ~record model=view #fnx_view_checklist_history_form
+            @name: fnx.checklist.history.form
+            @model: fnx.checklist.history
+            @type: form
+            @arch type='xml'
+                ~form $Questions
+                    ~header
+                        @state widget='statusbar' statusbar_invisible='ready,active,done'
+                    ~group colspan='4' col='6'
+                        ~group colspan='4' col='2'
+                            @name
+                            @checklist_id on_change="onchange_checklist_id(checklist_id)"
+                            @user_id options="{'create':False, 'create_edit':False, 'limit':15}"
+                        ~group colspan='2' col='2'
+                            @date_end
+                    ~separator colspan='4'
+                    ~separator $Questions colspan='4'
+                    @answers_ids colspan='4' nolabel='1'
+                        ~tree $Answers editable='bottom' create='0' delete='0'
+                            @response_type invisible='1'
+                            @answer_id domain="[('type','=',response_type)]"
+                            @question readonly='1'
+                            @detail
+
+        ~record model=act_window #fnx_action_checklist_history_all
+            @name: Blank Checklists
+            @type: ir.actions.act_window
+            @res_model: fnx.checklist.history
+            @view_type: form
+            @view_mode: tree,form
+
+        ~record model=act_window #fnx_action_checklist_history_new
+            @name: Fill a Checklist
+            @type: ir.actions.act_window
+            @res_model: fnx.checklist.history
+            @view_type: form
+            @view_mode: form,tree
+
+
+        // ~menuitem #menu_fnx_checklist_all name='Available Checklists' action='fnx_action_checklist_all' parent='menu_fnx_checklist' sequence='10'
+
+        // ~menuitem #menu_fnx_checklist_history_new name='Start Checklist' action='fnx_action_checklist_history_new' parent='menu_fnx_checklist' sequence='20'
+
+        // ~menuitem #menu_fnx_checklist_history_all name='Finish/View Checklists' action='fnx_action_checklist_history_all' parent='menu_fnx_checklist' sequence='30'
+
+        // ~report model='product.product' name='product.product.spec_sheet' auto='False' $Spec_Sheet #report_product_spec_sheet
+
