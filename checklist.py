@@ -50,7 +50,8 @@ class checklist(Normalize, osv.AbstractModel):
         # fix-up pointer fields
         self._columns['question_ids']._obj = '%s.question' % (self._name, )
         # register report
-        checklist_report(self._name, 'report.%s.%s' % (self._module, self._name))
+        if self._name != 'fnx.checklist':
+            checklist_report(self._name, 'report.%s.%s' % (self._module, self._name))
     #
     def _auto_init(self, cr, context=None):
         res = super(checklist, self)._auto_init(cr, context=context)
@@ -118,7 +119,7 @@ class checklist_history(Normalize, osv.AbstractModel):
         if self._name != 'fnx.checklist.history' and not user_id._domain:
             group_id = fields.ref('%s.group_%s_staff' % (self._module, self._module))
             user_id._domain = [('groups_id','=',group_id(pool, cr))]
-        checklist_report(self._name, 'report.%s.%s' % (self._module, self._name))
+            checklist_report(self._name, 'report.%s.%s' % (self._module, self._name))
     #
     def _auto_init(self, cr, context=None):
         res = super(checklist_history, self)._auto_init(cr, context=context)
