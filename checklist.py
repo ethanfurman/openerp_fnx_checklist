@@ -6,6 +6,7 @@ from fnx.oe import Normalize
 from io import BytesIO
 from openerp import pooler, SUPERUSER_ID
 from openerp.exceptions import ERPError
+from openerp.netsvc import Service
 from openerp.report.interface import report_int
 from openerp.report.render import render
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -51,7 +52,9 @@ class checklist(Normalize, osv.AbstractModel):
         self._columns['question_ids']._obj = '%s.question' % (self._name, )
         # register report
         if self._name != 'fnx.checklist':
-            checklist_report(self._name, 'report.%s.%s' % (self._module, self._name))
+            report_name = 'report.%s.%s' % (self._module, self._name)
+            if report_name not in Service._services:
+                checklist_report(self._name, report_name)
     #
     def _auto_init(self, cr, context=None):
         res = super(checklist, self)._auto_init(cr, context=context)
@@ -119,7 +122,9 @@ class checklist_history(Normalize, osv.AbstractModel):
         if self._name != 'fnx.checklist.history' and not user_id._domain:
             group_id = fields.ref('%s.group_%s_staff' % (self._module, self._module))
             user_id._domain = [('groups_id','=',group_id(pool, cr))]
-            checklist_report(self._name, 'report.%s.%s' % (self._module, self._name))
+            report_name = 'report.%s.%s' % (self._module, self._name)
+            if report_name not in Service._services:
+                checklist_report(self._name, report_name)
     #
     def _auto_init(self, cr, context=None):
         res = super(checklist_history, self)._auto_init(cr, context=context)
